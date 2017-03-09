@@ -1,0 +1,18 @@
+# If using with Rails, you must follow this config:
+#
+app_name:
+  development:
+    app_id: <%= ENV['WECHAT_APP_NAME_APP_ID'] %>
+    app_secret: <%= ENV['WECHAT_APP_NAME_APP_SECRET'] %>
+    oauth2_redirect_uri: <%= ENV['WECHAT_APP_NAME_OAUTH2_REDIRECT_URI'] %>
+
+  production:
+    app_id: <%= ENV['WECHAT_APP_NAME_APP_ID'] %>
+    app_secret: <%= ENV['WECHAT_APP_NAME_APP_SECRET'] %>
+    oauth2_redirect_uri: <%= ENV['WECHAT_APP_NAME_OAUTH2_REDIRECT_URI'] %>
+
+# Or without RAILS_ENV:
+app_name:
+  app_id: <%= ENV['WECHAT_APP_NAME_APP_ID'] %>
+  app_secret: <%= ENV['WECHAT_APP_NAME_APP_SECRET'] %>
+  oauth2_redirect_uri: <%= ENV['WECHAT_APP_NAME_OAUTH2_REDIRECT_URI'] %>

@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "wechat-gate"
+
+# usage:
+#   output_type: "/file/to/write/js/variable" | ruby | js
+#   refresh_token_and_ticket app_config_name page_url output_type
+#
+
+WechatGate::Config.new(ARGV[0]) do |config|
+  config.write_token_to_file ARGV[1], ARGV[2]
+end
