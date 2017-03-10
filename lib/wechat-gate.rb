@@ -1,6 +1,6 @@
 require "wechat_gate/version"
 require "wechat_gate/config"
 
-module WechatGate
-
+if defined?(ActionController)
+  ActionController::Base.send(:include, WechatGate::Controller)
 end

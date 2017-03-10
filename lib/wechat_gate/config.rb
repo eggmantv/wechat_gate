@@ -10,6 +10,7 @@ require 'wechat_gate/media'
 require 'wechat_gate/message'
 require 'wechat_gate/send_message'
 require 'wechat_gate/exception'
+require 'wechat_gate/controller'
 
 module WechatGate
   class Config
@@ -36,17 +37,21 @@ module WechatGate
       end
 
       raise Exception::ConfigException, "no wechat configuration file found!" unless config_file
-      raise Exception::ConfigException, "configuration file does not exist!" unless File.exists?(config_file)
+      unless File.exists?(config_file)
+        raise Exception::ConfigException, "configuration file does not exist!"
+      end
 
       config_text = ERB.new(File.read(config_file)).result
       configs = YAML.load(config_text)
+      unless configs[app_config_name]
+        raise Exception::ConfigException, "no configuration found for app: #{app_config_name}!"
+      end
+
       @specs = if defined?(Rails)
-        configs[app_config_name][Rails.env]
+        configs[app_config_name][Rails.env] || configs[app_config_name]
       else
         configs[app_config_name]
       end
-
-      raise "not found app name" unless @specs
 
       @app_config_name = app_config_name
 
