@@ -76,9 +76,11 @@ app_name:
   oauth2_redirect_uri: <%= ENV['WECHAT_APP_NAME_OAUTH2_REDIRECT_URI'] %>
 ```
 
-然后在ApplicationController中指定当前要读取的配置：
+然后在ApplicationController中指定当前要读取的公众号名称：
 
+```
 self.wechat_gate_app_name = 'eggman'
+```
 
 ## 后端调用
 
@@ -119,6 +121,8 @@ config = WechatGate::Config.new('app_name', '/path/to/what/ever/you/want.yml')
 ```
 
 **配置文件支持erb**
+
+> 更过接口和文档请直接看源码，写的很详细
 
 ## JS-SDK
 
