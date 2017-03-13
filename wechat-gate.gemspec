@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Lei Lee"]
   spec.email         = ["mytake6@gmail.com"]
 
-  spec.summary       = %q{另一个微信开发的Ruby Gem}
+  spec.summary       = %q{隔壁家老李的微信开发Ruby Gem}
   spec.description   = %q{接口简单易用，实在是微信开发必备之好Gem}
   spec.homepage      = "https://github.com/eggmantv/wechat_gate"
   spec.license       = "MIT"
