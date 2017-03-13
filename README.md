@@ -107,17 +107,17 @@ wechat_gate_config.menu_create(MENU_HASH) # 创建菜单
 wechat_gate_config.generate_js_request_params(REFERER_URL) # 返回JS-SDK的验证参数，供前端JS-SDK使用
 ```
 
+当然你也可以手工来初始化配置，甚至指定配置文件的路径：
+
+```
+config = WechatGate::Config.new('app_name', '/path/to/what/ever/you/want.yml')
+```
+
 access_token和JS_SDK中ticket都有过期时间和刷新次数限制，这里已经考虑了，你可以不用管，如果你想手工刷新，可以这样:
 
 ```
 config.refresh_access_token
 config.refresh_jsapi_ticket
-```
-
-当然你也可以手工来初始化配置，甚至指定配置文件的路径：
-
-```
-config = WechatGate::Config.new('app_name', '/path/to/what/ever/you/want.yml')
 ```
 
 **配置文件支持erb**
