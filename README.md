@@ -7,7 +7,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'wechat-gate', '0.3.6'
+gem 'wechat-gate'
 ```
 
 And then execute:
