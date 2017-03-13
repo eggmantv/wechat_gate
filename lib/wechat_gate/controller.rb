@@ -21,7 +21,7 @@ module WechatGate
           raise Exception::ConfigException, "please specify wechat_gate_app_name!"
         end
 
-        @wechat_gate_config = Wechat::Config.new(self.class.wechat_gate_app_name)
+        @wechat_gate_config = WechatGate::Config.new(self.class.wechat_gate_app_name)
       end
 
       def wechat_gate_config
