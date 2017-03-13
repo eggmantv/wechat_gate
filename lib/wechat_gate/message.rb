@@ -3,7 +3,7 @@ module WechatGate
     #
     # http://mp.weixin.qq.com/wiki/17/f298879f8fb29ab98b2f2971d42552fd.html
     #
-    # 消息大发送只能是被动的，就是微信会把用户的聊天数据推送到服务器端，然后服务器利用返回值作出相应
+    # 消息发送只能是被动的，就是微信会把用户的聊天数据推送到服务器端，然后服务器利用返回值作出相应
     #
 
     def message_body(type, to, body)

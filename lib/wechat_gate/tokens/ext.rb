@@ -12,13 +12,10 @@ module WechatGate
         noncestr = []
         16.times { noncestr << word_creator.call }
 
-        jsapi_tic = self.jsapi_ticket
-        timestamp = Time.now.to_i
-
         params = {
-          "jsapi_ticket" => jsapi_tic,
+          "jsapi_ticket" => self.jsapi_ticket,
           "noncestr" => noncestr.join,
-          "timestamp" => timestamp,
+          "timestamp" => Time.now.to_i,
           "url" => current_page_url
         }
 

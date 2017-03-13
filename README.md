@@ -2,6 +2,23 @@
 
 **微信公众平台开发库**
 
+支持的接口:
+
+- access_token(后端API使用)
+- 用户授权信息获取(OAuth2)
+- JS-SDK
+- 回复消息封装
+- 菜单接口
+- 素材接口
+
+功能特点:
+
+- 自动管理access_token和JS-SDK的ticket刷新和过期
+- 多微信公众号支持
+- 多环境支持(development, production)，方便本地测试
+- Controler和helper方法(微信session管理等等)
+- 接口简单，方便定制
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -18,7 +35,7 @@ Or install it yourself as:
 
     $ gem install wechat-gate
 
-## Settings
+## 公众号
 
 在开工之前你需要在微信公众账号平台做以下配置:
 
@@ -27,24 +44,88 @@ Or install it yourself as:
 3. 在“接口权限” － “网页授权获取用户基本信息”中设置你的授权回调页面域名，这个用于OAuth2的回调域名认证
 4. 在“基本配置”中查看并配置你的AppID和AppSecret
 
-## Usage
+## 配置
 
-1.在Rails项目config目录下建立文件wechat.yml，并配置你的公众号信息.
+在Rails项目config目录下建立文件wechat.yml，并配置你的公众号信息.
 
 ```
-  app_name:
-    app_id: idstring
-    app_secret: secret
-    oauth2_redirect_uri: "http://www.example.com/api/wechat_oauth/callback"
+# 区分不同的环境
+eggman:
+  development:
+    host: http://wechat-test1.eggman.tv
+
+    wechat_id: xxxxxxxxxx
+    app_id: xxxxxxxxxx
+    app_secret: xxxxxxxxxx
+
+    oauth2_redirect_uri: "http://wechat-test1.eggman.tv/wechat/users/callback"
+
+    push_url: "http://wechat-test1.eggman.tv/wechat/push"
+    push_token: xxxxxxxxxxxxxxxxxxxx
+  production:
+    host: https://eggman.tv
+
+    wechat_id: xxxxxxxxxx
+    app_id: xxxxxxxxxxxxxxxxxxxx
+    app_secret: xxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# 如果不需要多环境支持，也可以这样
+app_name:
+  app_id: <%= ENV['WECHAT_APP_NAME_APP_ID'] %>
+  app_secret: <%= ENV['WECHAT_APP_NAME_APP_SECRET'] %>
+  oauth2_redirect_uri: <%= ENV['WECHAT_APP_NAME_OAUTH2_REDIRECT_URI'] %>
 ```
 
-2.在Controller中调用(用于微信JS-SDK)
+然后在ApplicationController中指定当前要读取的配置：
+
+self.wechat_gate_app_name = 'eggman'
+
+## 后端调用
+
+后台API操作(比如微信用户信息获取等等操作)。
+
+默认情况下在controller中已经初始化了配置，方法为**wechat_gate_config**，直接使用就行。
+
+
+```ruby
+wechat_gate_config.users # 获取用户列表
+wechat_gate_config.user('ONE_OPEN_ID') # 获取一个用户的详细信息
+wechat_gate_config.access_token # 获取当前access_token
+
+# OAuth 2
+wechat_gate_config.oauth2_entrance_url(scope: "snsapi_userinfo", state: "CURENT_STATE") # 获取当前OAuth2授权入口URL
+wechat_gate_config.oauth2_access_token("TOKEN") # 根据OAuth2返回的TOKEN获取access_token
+wechat_gate_config.oauth2_user("ACCESS_TOKEN", "ONE_OPEN_ID") # 获取一个用户的信息
+
+wechat_gate_config.medias # 获取素材列表, 参数type: image | video | voice | news (图文)
+
+wechat_gate_config.menu_get # 获取菜单
+wechat_gate_config.menu_create(MENU_HASH) # 创建菜单
+
+wechat_gate_config.generate_js_request_params(REFERER_URL) # 返回JS-SDK的验证参数，供前端JS-SDK使用
+```
+
+access_token和JS_SDK中ticket都有过期时间和刷新次数限制，这里已经考虑了，你可以不用管，如果你想手工刷新，可以这样:
+
+```
+config.refresh_access_token
+config.refresh_jsapi_ticket
+```
+
+当然你也可以手工来初始化配置，甚至指定配置文件的路径：
+
+```
+config = WechatGate::Config.new('app_name', '/path/to/what/ever/you/want.yml')
+```
+
+**配置文件支持erb**
+
+## JS-SDK
 
 ```ruby
   def ticket
     url = CGI.unescape(params[:url]) # 微信中用户访问的页面
-    config = WechatGate::Config.new('app_name')
-    @data = config.generate_js_request_params(url) # 生成微信JS-SDK所需的jsapi_ticket，signature等等参数供前段js使用
+    @data = wechat_gate_config.generate_js_request_params(url) # 生成微信JS-SDK所需的jsapi_ticket，signature等等参数供前段js使用
     render content_type: "application/javascript"
   end
 ```
@@ -56,7 +137,7 @@ var wxServerConfig = <%= @data.to_json.html_safe %>;
 <%= params[:callback] %>();
 ```
 
-然后在微信端页面引入一下代码:
+然后在微信端页面引入以下代码:
 
 ```js
 (function() {
@@ -66,15 +147,6 @@ var wxServerConfig = <%= @data.to_json.html_safe %>;
   s.parentNode.insertBefore(ticket, s);
 })();
 ```
-
-
-**如果不是利用JS-SDK，而是后台API操作(比如微信用户信息获取等等操作)，可以直接利用以下方法来获取access_token:**
-```ruby
-config = WechatGate::Config.new('app_name')
-config.refresh_access_token
-config.refresh_jsapi_ticket
-```
-
 
 ## TODO
 

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wechat-gate (0.1.1)
+    wechat-gate (0.1.2)
       activesupport (~> 5.0.1)
       rest-client (~> 1.8)
 
