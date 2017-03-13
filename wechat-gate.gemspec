@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{另一个微信开发的Ruby Gem}
   spec.description   = %q{接口简单易用，实在是微信开发必备之好Gem}
-  spec.homepage      = "https://eggman.tv"
+  spec.homepage      = "https://github.com/eggmantv/wechat_gate"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
