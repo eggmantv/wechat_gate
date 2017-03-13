@@ -110,7 +110,7 @@ wechat_gate_config.generate_js_request_params(REFERER_URL) # 返回JS-SDK的验�
 当然你也可以手工来初始化配置，甚至指定配置文件的路径：
 
 ```
-config = WechatGate::Config.new('app_name', '/path/to/what/ever/you/want.yml')
+config = WechatGate::Config.new('eggman', '/path/to/what/ever/you/want.yml')
 ```
 
 access_token和JS_SDK中ticket都有过期时间和刷新次数限制，这里已经考虑了，你可以不用管，如果你想手工刷新，可以这样:
