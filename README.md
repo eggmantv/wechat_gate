@@ -122,7 +122,7 @@ config = WechatGate::Config.new('app_name', '/path/to/what/ever/you/want.yml')
 
 **配置文件支持erb**
 
-> 更过接口和文档请直接看源码，写的很详细
+> 更多接口和文档请直接看源码，写的很详细
 
 ## JS-SDK
 
