@@ -1,6 +1,6 @@
 # v0.1.4
 
-  - add creat_menu rake task
+  - add create_menu rake task
 
 # v0.1.3
 
