@@ -41,8 +41,8 @@ module WechatGate
       end
 
       def saved_file
-        # File.expand_path("../../../../data/APP-#{@config.app_config_name}-#{self.class.name}", __FILE__)
-        "/tmp/APP-#{@config.app_config_name}-#{self.class.name}-#{@config.specs['app_id']}"
+        # File.expand_path("../../../../data/APP-#{@config.app_name}-#{self.class.name}", __FILE__)
+        "/tmp/APP-#{@config.app_name}-#{self.class.name}-#{@config.config['app_id']}"
       end
 
       def is_expired?

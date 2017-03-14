@@ -112,8 +112,8 @@ module WechatGate
         url: "https://mp.weixin.qq.com/cgi-bin/login?lang=zh_CN",
         verify_ssl: false,
         payload: {
-          username: self.specs['wechat_login_username'],
-          pwd: Digest::MD5.hexdigest(self.specs['wechat_login_password']),
+          username: self.config['wechat_login_username'],
+          pwd: Digest::MD5.hexdigest(self.config['wechat_login_password']),
           imgcode: "",
           f: "json"
         }.to_query,

@@ -21,11 +21,11 @@ module WechatGate
     def oauth2_entrance_url(ops = {})
       ops = {
         state: 'empty', # 自定义参数值
-        redirect_uri: self.specs["oauth2_redirect_uri"],
+        redirect_uri: self.config["oauth2_redirect_uri"],
         scope: 'snsapi_base' # snsapi_base | snsapi_userinfo
       }.merge(ops)
 
-      "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{self.specs['app_id']}&redirect_uri=#{CGI.escape(ops[:redirect_uri])}&response_type=code&scope=#{ops[:scope]}&state=#{ops[:state]}#wechat_redirect"
+      "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{self.config['app_id']}&redirect_uri=#{CGI.escape(ops[:redirect_uri])}&response_type=code&scope=#{ops[:scope]}&state=#{ops[:state]}#wechat_redirect"
     end
 
     # TODO
@@ -46,7 +46,7 @@ module WechatGate
     # 此时这里的access_token意义就不大了，这里的access_token和Tokens::AccessToken的token是完全不一样的。
     #
     def oauth2_access_token(code)
-      WechatGate::Request.send("https://api.weixin.qq.com/sns/oauth2/access_token?appid=#{self.specs['app_id']}&secret=#{self.specs['app_secret']}&code=#{code}&grant_type=authorization_code")
+      WechatGate::Request.send("https://api.weixin.qq.com/sns/oauth2/access_token?appid=#{self.config['app_id']}&secret=#{self.config['app_secret']}&code=#{code}&grant_type=authorization_code")
     end
 
     # access_token拥有较短的有效期，当access_token超时后，可以使用refresh_token进行刷新，
@@ -67,7 +67,7 @@ module WechatGate
     #    "scope":"SCOPE"
     # }
     def oauth2_refresh_access_token(refresh_token)
-      WechatGate::Request.send("https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=#{self.specs['app_id']}&grant_type=refresh_token&refresh_token=#{refresh_token}")
+      WechatGate::Request.send("https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=#{self.config['app_id']}&grant_type=refresh_token&refresh_token=#{refresh_token}")
     end
 
     # 获取用户信息

@@ -39,7 +39,7 @@ module WechatGate
       %Q{
         <xml>
           <ToUserName><![CDATA[#{to}]]></ToUserName>
-          <FromUserName><![CDATA[#{self.specs['wechat_id']}]]></FromUserName>
+          <FromUserName><![CDATA[#{self.config['wechat_id']}]]></FromUserName>
           <CreateTime>#{Time.now.to_i}</CreateTime>
           <MsgType><![CDATA[#{type}]]></MsgType>
           #{content}

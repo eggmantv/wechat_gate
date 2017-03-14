@@ -15,7 +15,7 @@ module WechatGate
 
       class Get < WechatGate::Tokens::Base
         def url
-          "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{@config.specs['app_id']}&secret=#{@config.specs['app_secret']}"
+          "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=#{@config.config['app_id']}&secret=#{@config.config['app_secret']}"
         end
 
         def save response

@@ -15,8 +15,8 @@ require 'wechat_gate/controller'
 module WechatGate
   class Config
 
-    attr_reader :app_config_name
-    attr_reader :specs
+    attr_reader :app_name
+    attr_reader :config
     attr_reader :output_type
 
     include WechatGate::Tokens::AccessToken
@@ -29,7 +29,7 @@ module WechatGate
     include WechatGate::Message
     include WechatGate::SendMessage
 
-    def initialize app_config_name, config_file = nil
+    def initialize app_name, config_file = nil
       unless config_file
         if defined?(Rails)
           config_file = "#{Rails.root}/config/wechat.yml"
@@ -43,17 +43,17 @@ module WechatGate
 
       config_text = ERB.new(File.read(config_file)).result
       configs = YAML.load(config_text)
-      unless configs[app_config_name]
-        raise Exception::ConfigException, "no configuration found for app: #{app_config_name}!"
+      unless configs[app_name]
+        raise Exception::ConfigException, "no configuration found for app: #{app_name}!"
       end
 
-      @specs = if defined?(Rails)
-        configs[app_config_name][Rails.env] || configs[app_config_name]
+      @config = if defined?(Rails)
+        configs[app_name][Rails.env] || configs[app_name]
       else
-        configs[app_config_name]
+        configs[app_name]
       end
 
-      @app_config_name = app_config_name
+      @app_name = app_name
 
       yield(self) if block_given?
     end

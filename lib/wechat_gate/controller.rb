@@ -54,7 +54,7 @@ module WechatGate
 
       def is_legal_from_wechat_server?
         data = [
-          wechat_gate_config.specs["push_token"],
+          wechat_gate_config.config["push_token"],
           params[:timestamp],
           params[:nonce]
         ]
