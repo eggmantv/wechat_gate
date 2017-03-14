@@ -152,6 +152,38 @@ var wxServerConfig = <%= @data.to_json.html_safe %>;
 })();
 ```
 
+## 其他功能
+
+### 自定义菜单
+
+首先设置菜单配置文件，config/wechat_menu.yml，支持erb，格式请参考[微信自定义菜单文档](https://mp.weixin.qq.com/wiki):
+
+```
+button:
+  - type: view
+    name: 我的2
+    url: <%= @config.oauth2_entrance_url(scope: 'snsapi_userinfo', state: 'profile') %>
+  - type: view
+    name: 课程
+    sub_button:
+      - type: view
+        name: 免费课程
+        url:  <%= @config.oauth2_entrance_url(scope: 'snsapi_userinfo', state: 'free') %>
+      - type: view
+        name: 付费课程
+        url:  <%= @config.oauth2_entrance_url(scope: 'snsapi_userinfo', state: 'paid') %>
+```
+
+> 其中的**@config**变量为当前微信公众号实例，请不要修改，直接使用
+
+然后执行rake任务:
+
+```shell
+$rails wechat_gate:create_menu APP_NAME=eggman CONFIG=/path/to/wechat.yml MENU=/path/to/wechat_menu
+```
+
+其中，CONFIG默认为config/wechat.yml，MENU默认为config/wechat_menu.yml，APP_NAME必须指定
+
 ## TODO
 
 添加测试
