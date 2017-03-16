@@ -22,6 +22,7 @@ module WechatGate
         sign_string = params.keys.sort.inject([]) { |m, n| m << "#{n}=#{params[n]}" }.join('&')
         sign = Digest::SHA1.hexdigest(sign_string)
         params["signature"] = sign
+        params["app_id"] = self.config['app_id']
 
         params
       end
