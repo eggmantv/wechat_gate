@@ -19,6 +19,8 @@
 - Controler和helper方法(微信session管理等等)
 - 接口简单，方便定制
 
+使用视频教程: [微信公众号开发](https://eggman.tv/c/s-wechat-development-using-ruby-on-rails)
+
 ## Installation
 
 Add this line to your application's Gemfile:
