@@ -181,7 +181,7 @@ button:
 然后执行rake任务:
 
 ```shell
-$rails wechat_gate:create_menu APP_NAME=eggman CONFIG=/path/to/wechat.yml MENU=/path/to/wechat_menu
+$rails wechat_gate:create_menu APP_NAME=eggman CONFIG=/path/to/wechat.yml MENU=/path/to/wechat_menu.yml
 ```
 
 其中，CONFIG默认为config/wechat.yml，MENU默认为config/wechat_menu.yml，APP_NAME必须指定
